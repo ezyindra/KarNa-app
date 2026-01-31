@@ -1,0 +1,304 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Mode - Heather Grey */
+    --background: 0 0% 83%;
+    --foreground: 220 15% 20%;
+    --card: 0 0% 98%;
+    --card-foreground: 220 15% 20%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 220 15% 20%;
+    --primary: 220 15% 25%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 88%;
+    --secondary-foreground: 220 15% 20%;
+    --muted: 0 0% 90%;
+    --muted-foreground: 220 10% 45%;
+    --accent: 0 0% 92%;
+    --accent-foreground: 220 15% 20%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 75%;
+    --input: 0 0% 80%;
+    --ring: 220 15% 25%;
+    --radius: 0.625rem;
+    
+    /* Custom KarNa Colors */
+    --karna-heather: #D3D3D3;
+    --karna-melange: #C8C8C8;
+    --karna-soft-white: #FAFAFA;
+    --karna-deep-slate: #2D3748;
+    --karna-charcoal: #4A5568;
+    
+    /* Pastel Focus Colors (5 muted colors) */
+    --karna-pastel-1: #E8B4B8;
+    --karna-pastel-2: #B8D4E8;
+    --karna-pastel-3: #B8E8D4;
+    --karna-pastel-4: #E8D4B8;
+    --karna-pastel-5: #D4B8E8;
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 78%;
+    --sidebar-foreground: 220 15% 20%;
+    --sidebar-primary: 220 15% 25%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 85%;
+    --sidebar-accent-foreground: 220 15% 20%;
+    --sidebar-border: 0 0% 70%;
+    --sidebar-ring: 220 15% 25%;
+  }
+
+  .dark {
+    /* Dark Mode - Pitch Black */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 90%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 90%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 90%;
+    --primary: 0 0% 90%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 90%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 90%;
+    --destructive: 0 60% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 18%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 70%;
+    
+    /* Custom KarNa Dark Colors */
+    --karna-pitch-black: #000000;
+    --karna-deep-onyx: #121212;
+    --karna-void: #0A0A0A;
+    
+    /* Sidebar Dark */
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-primary: 0 0% 90%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 0 0% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    @apply antialiased;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+@layer components {
+  /* Frameless Window Title Bar */
+  .title-bar {
+    @apply h-8 flex items-center justify-between px-2 select-none;
+    -webkit-app-region: drag;
+  }
+  
+  .title-bar-controls {
+    @apply flex items-center gap-1;
+    -webkit-app-region: no-drag;
+  }
+  
+  .title-bar-btn {
+    @apply w-3 h-3 rounded-full flex items-center justify-center transition-all duration-150;
+  }
+  
+  /* Custom Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-muted-foreground/30;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+  
+  /* 3D Clay Effect */
+  .clay-3d {
+    @apply rounded-2xl;
+    box-shadow: 
+      8px 8px 16px rgba(0, 0, 0, 0.15),
+      -4px -4px 12px rgba(255, 255, 255, 0.5),
+      inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+      inset -1px -1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark .clay-3d {
+    box-shadow: 
+      6px 6px 12px rgba(0, 0, 0, 0.5),
+      -2px -2px 8px rgba(60, 60, 60, 0.2),
+      inset 1px 1px 2px rgba(80, 80, 80, 0.2),
+      inset -1px -1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  .clay-3d-pressed {
+    @apply rounded-2xl;
+    box-shadow: 
+      inset 3px 3px 6px rgba(0, 0, 0, 0.15),
+      inset -2px -2px 4px rgba(255, 255, 255, 0.5);
+  }
+  
+  .dark .clay-3d-pressed {
+    box-shadow: 
+      inset 3px 3px 6px rgba(0, 0, 0, 0.5),
+      inset -2px -2px 4px rgba(60, 60, 60, 0.2);
+  }
+  
+  /* Editor Paper Styles */
+  .editor-paper {
+    @apply transition-colors duration-300;
+  }
+  
+  .editor-paper-white {
+    @apply bg-white;
+  }
+  
+  .editor-paper-sepia {
+    background-color: #F5E6D3;
+  }
+  
+  .editor-paper-cool-grey {
+    background-color: #E8E8EC;
+  }
+  
+  .editor-paper-oled {
+    @apply bg-black text-gray-200;
+  }
+  
+  /* Flow Garden Plant Styles */
+  .plant-stem {
+    @apply transition-all duration-700 ease-out;
+  }
+  
+  .plant-leaf {
+    @apply transition-all duration-500 ease-out origin-bottom;
+  }
+  
+  .plant-bloom {
+    @apply transition-all duration-1000 ease-out;
+    animation: bloom 0.8s ease-out forwards;
+  }
+  
+  @keyframes bloom {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  /* Kanban Styles */
+  .kanban-column {
+    @apply flex flex-col gap-3 p-4 rounded-xl;
+    @apply bg-secondary/50 min-h-[400px];
+  }
+  
+  .kanban-card {
+    @apply p-4 rounded-lg bg-card cursor-grab active:cursor-grabbing;
+    @apply border border-border shadow-sm transition-all duration-200;
+  }
+  
+  .kanban-card:hover {
+    @apply shadow-md border-primary/30;
+  }
+  
+  /* Floating Toolbar */
+  .floating-toolbar {
+    @apply absolute flex items-center gap-1 px-2 py-1.5 rounded-lg;
+    @apply bg-popover border border-border shadow-lg;
+    @apply animate-in fade-in zoom-in-95 duration-150;
+  }
+  
+  /* Slash Command Menu */
+  .slash-menu {
+    @apply absolute z-50 w-64 rounded-lg overflow-hidden;
+    @apply bg-popover border border-border shadow-xl;
+    @apply animate-in fade-in slide-in-from-top-2 duration-150;
+  }
+  
+  /* Calendar 3D Block */
+  .calendar-block {
+    @apply relative rounded-xl transition-all duration-200;
+    @apply flex items-center justify-center;
+  }
+  
+  .calendar-block:hover:not(.disabled) {
+    @apply scale-105;
+  }
+  
+  /* Navigation Item */
+  .nav-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg;
+    @apply text-muted-foreground transition-all duration-200;
+  }
+  
+  .nav-item:hover {
+    @apply bg-accent text-foreground;
+  }
+  
+  .nav-item.active {
+    @apply bg-primary text-primary-foreground;
+  }
+  
+  /* Document Card */
+  .doc-card {
+    @apply p-5 rounded-xl bg-card border border-border;
+    @apply transition-all duration-200 cursor-pointer;
+  }
+  
+  .doc-card:hover {
+    @apply shadow-lg border-primary/30 -translate-y-0.5;
+  }
+  
+  /* Quick Thought Item */
+  .thought-item {
+    @apply p-4 rounded-lg bg-accent/50 border border-border/50;
+    @apply transition-all duration-200;
+  }
+  
+  /* FAB Button */
+  .fab-button {
+    @apply fixed bottom-8 right-8 w-14 h-14 rounded-full;
+    @apply bg-primary text-primary-foreground shadow-lg;
+    @apply flex items-center justify-center;
+    @apply transition-all duration-200 hover:scale-110 hover:shadow-xl;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .drag-region {
+    -webkit-app-region: drag;
+  }
+  
+  .no-drag {
+    -webkit-app-region: no-drag;
+  }
+}
