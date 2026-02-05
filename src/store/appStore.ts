@@ -39,50 +39,42 @@ export interface CalendarTask {
 }
 
 export interface AppState {
-  // Navigation
   currentView: ViewType;
   setCurrentView: (view: ViewType) => void;
-  
-  // Theme
+
   themeMode: ThemeMode;
   toggleTheme: () => void;
   setThemeMode: (mode: ThemeMode) => void;
-  
-  // Editor
+
   currentDocument: Document | null;
   setCurrentDocument: (doc: Document | null) => void;
   editorPaper: EditorPaper;
   setEditorPaper: (paper: EditorPaper) => void;
-  
-  // Documents
+
   documents: Document[];
   addDocument: (doc: Omit<Document, 'id' | 'createdAt' | 'updatedAt' | 'size'>) => void;
   updateDocument: (id: string, updates: Partial<Document>) => void;
   deleteDocument: (id: string) => void;
-  
-  // Quick Thoughts
+
   quickThoughts: QuickThought[];
   addQuickThought: (content: string) => void;
   deleteQuickThought: (id: string) => void;
   convertThoughtToDocument: (thoughtId: string) => void;
-  
-  // Goals
+
   goals: Goal[];
   addGoal: (goal: Omit<Goal, 'id' | 'createdAt'>) => void;
   updateGoal: (id: string, updates: Partial<Goal>) => void;
   deleteGoal: (id: string) => void;
   moveGoal: (id: string, newStatus: GoalStatus) => void;
-  
-  // Calendar Tasks
+
   calendarTasks: CalendarTask[];
   addCalendarTask: (task: Omit<CalendarTask, 'id'>) => void;
+  updateCalendarTask: (id: string, title: string) => void;
   deleteCalendarTask: (id: string) => void;
-  
-  // Flow Garden
+
   completedTasksToday: number;
   incrementCompletedTasks: () => void;
-  
-  // Custom Labels
+
   customLabels: string[];
   addCustomLabel: (label: string) => void;
 }
@@ -90,24 +82,21 @@ export interface AppState {
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
-      // Navigation
       currentView: 'home',
       setCurrentView: (view) => set({ currentView: view }),
-      
-      // Theme
+
       themeMode: 'light',
-      toggleTheme: () => set((state) => ({ 
-        themeMode: state.themeMode === 'light' ? 'dark' : 'light' 
-      })),
+      toggleTheme: () =>
+        set((state) => ({
+          themeMode: state.themeMode === 'light' ? 'dark' : 'light',
+        })),
       setThemeMode: (mode) => set({ themeMode: mode }),
-      
-      // Editor
+
       currentDocument: null,
       setCurrentDocument: (doc) => set({ currentDocument: doc }),
       editorPaper: 'white',
       setEditorPaper: (paper) => set({ editorPaper: paper }),
-      
-      // Documents
+
       documents: [],
       addDocument: (doc) => {
         const newDoc: Document = {
@@ -123,7 +112,14 @@ export const useAppStore = create<AppState>()(
         set((state) => ({
           documents: state.documents.map((d) =>
             d.id === id
-              ? { ...d, ...updates, updatedAt: new Date(), size: updates.content ? new Blob([updates.content]).size : d.size }
+              ? {
+                  ...d,
+                  ...updates,
+                  updatedAt: new Date(),
+                  size: updates.content
+                    ? new Blob([updates.content]).size
+                    : d.size,
+                }
               : d
           ),
         }));
@@ -133,8 +129,7 @@ export const useAppStore = create<AppState>()(
           documents: state.documents.filter((d) => d.id !== id),
         }));
       },
-      
-      // Quick Thoughts
+
       quickThoughts: [],
       addQuickThought: (content) => {
         const newThought: QuickThought = {
@@ -154,7 +149,9 @@ export const useAppStore = create<AppState>()(
         if (thought) {
           const newDoc: Document = {
             id: crypto.randomUUID(),
-            title: thought.content.slice(0, 50) + (thought.content.length > 50 ? '...' : ''),
+            title:
+              thought.content.slice(0, 50) +
+              (thought.content.length > 50 ? '...' : ''),
             content: thought.content,
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -166,8 +163,7 @@ export const useAppStore = create<AppState>()(
           }));
         }
       },
-      
-      // Goals
+
       goals: [],
       addGoal: (goal) => {
         const newGoal: Goal = {
@@ -197,8 +193,7 @@ export const useAppStore = create<AppState>()(
           get().incrementCompletedTasks();
         }
       },
-      
-      // Calendar Tasks
+
       calendarTasks: [],
       addCalendarTask: (task) => {
         const newTask: CalendarTask = {
@@ -207,19 +202,26 @@ export const useAppStore = create<AppState>()(
         };
         set((state) => ({ calendarTasks: [...state.calendarTasks, newTask] }));
       },
+      updateCalendarTask: (id, title) => {
+        set((state) => ({
+          calendarTasks: state.calendarTasks.map((t) =>
+            t.id === id ? { ...t, title } : t
+          ),
+        }));
+      },
       deleteCalendarTask: (id) => {
         set((state) => ({
           calendarTasks: state.calendarTasks.filter((t) => t.id !== id),
         }));
       },
-      
-      // Flow Garden
+
       completedTasksToday: 0,
       incrementCompletedTasks: () => {
-        set((state) => ({ completedTasksToday: state.completedTasksToday + 1 }));
+        set((state) => ({
+          completedTasksToday: state.completedTasksToday + 1,
+        }));
       },
-      
-      // Custom Labels
+
       customLabels: [],
       addCustomLabel: (label) => {
         set((state) => ({
