@@ -81,7 +81,8 @@ function DayBlock({
         "calendar-block clay-3d aspect-square p-2 relative transform-gpu rounded-sm group",
         "flex flex-col items-start justify-start",
         "transition-all duration-200",
-        "hover:-translate-y-3 hover:z-10 hover:scale-[1.06] hover:!shadow-lg hover:!shadow-black/40 hover:!bg-neutral-900",
+        "hover:-translate-y-3 hover:z-10 hover:scale-[1.06] hover:shadow-lg",
+        "hover:bg-muted dark:hover:bg-neutral-900",
         !isCurrentMonth && "opacity-40",
         isToday && "ring-2 ring-primary ring-offset-2"
       )}
@@ -176,11 +177,11 @@ export function CalendarView() {
 
   const tasksForDay = selectedDate
     ? calendarTasks.filter((t) =>
-        isSameDay(
-          typeof t.date === "string" ? parseISO(t.date) : t.date,
-          selectedDate
-        )
+      isSameDay(
+        typeof t.date === "string" ? parseISO(t.date) : t.date,
+        selectedDate
       )
+    )
     : [];
 
   return (
