@@ -169,7 +169,10 @@ export function CalendarView() {
       updateCalendarTask(editingTaskId, newTaskTitle.trim());
       setEditingTaskId(null);
     } else {
-      addCalendarTask({ date: selectedDate, title: newTaskTitle.trim() });
+      addCalendarTask({
+        date: selectedDate.getTime(),
+        title: newTaskTitle.trim()
+      })
     }
 
     setNewTaskTitle("");
